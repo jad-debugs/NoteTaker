@@ -13,9 +13,9 @@ const addNote = (title, body) => {
     // filter is like a for each loop for each json object
     // and if we return true while on some object, it is added
     // to our new json object
-    const duplicateNotes = notes.filter((note) => note.title === title)
+    const duplicateNote = notes.find((note) => note.title === title)
 
-    if (duplicateNotes.length === 0) {
+    if (!duplicateNote) {
         notes.push({
             title: title,
             body: body
@@ -61,8 +61,37 @@ const removeNote = (title) => {
     }
 }
 
+// list notes
+
+const listNotes = () => {
+    const notes = loadNotes()
+
+    console.log(chalk.blue('Your Notes :'))
+
+    notes.forEach((note) => {
+        console.log(note.title)
+    })
+}
+
+// read note
+
+const readNote = (title) => {
+    const notes = loadNotes()
+    const note = notes.find((note) => title === note.title)
+
+    if (note) {
+        console.log(chalk.bold.inverse(title))
+        console.log(note.body)
+    }
+    else {
+        console.log(chalk.red('Error! No note found!'))
+    }
+}
+
 module.exports = {
     getNotes: getNotes,
     addNote: addNote,
-    removeNote: removeNote
+    removeNote: removeNote,
+    listNotes: listNotes,
+    readNote: readNote
 }
