@@ -1,21 +1,19 @@
 const fs = require('fs')
 const chalk = require('chalk')
 
-const getNotes = function() {
+const getNotes = () => {
     return 'Your Notes...'
 }
 
 // add note
 
-const addNote = function (title, body) {
+const addNote = (title, body) => {
     const notes = loadNotes()
 
     // filter is like a for each loop for each json object
     // and if we return true while on some object, it is added
     // to our new json object
-    const duplicateNotes = notes.filter(function (note) {
-        return note.title === title
-    })
+    const duplicateNotes = notes.filter((note) => note.title === title)
 
     if (duplicateNotes.length === 0) {
         notes.push({
@@ -31,12 +29,12 @@ const addNote = function (title, body) {
 
 }
 
-const saveNotes = function (notes) {
+const saveNotes = (notes) => {
     const dataJSON = JSON.stringify(notes)
     fs.writeFileSync('notes.json', dataJSON)
 }
 
-const loadNotes = function() {
+const loadNotes = () => {
     // error when adding note
     try {
         const dataBuffer = fs.readFileSync('notes.json')
@@ -50,11 +48,10 @@ const loadNotes = function() {
 
 // remove note
 
-const removeNote = function (title) {
+const removeNote = (title) => {
     const notes = loadNotes()
-    const updatedNotes = notes.filter(function (note) {
-        return title !== note.title
-    })
+    const updatedNotes = notes.filter((note) => title !== note.title)
+
     if (updatedNotes.length < notes.length) {
         console.log(chalk.green('Note removed!'))
         saveNotes(updatedNotes)
