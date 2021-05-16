@@ -1,13 +1,18 @@
 const fs = require('fs')
+const chalk = require('chalk')
 
 const getNotes = function() {
     return 'Your Notes...'
 }
 
+// add note
+
 const addNote = function (title, body) {
     const notes = loadNotes()
 
     // filter is like a for each loop for each json object
+    // and if we return true while on some object, it is added
+    // to our new json object
     const duplicateNotes = notes.filter(function (note) {
         return note.title === title
     })
@@ -18,10 +23,10 @@ const addNote = function (title, body) {
             body: body
         })
         saveNotes(notes)
-        console.log('New note added!')
+        console.log(chalk.green('New note added!'))
     }
     else {
-        console.log('Note title already taken!')
+        console.log(chalk.red('Note title already taken!'))
     }
 
 }
@@ -41,11 +46,26 @@ const loadNotes = function() {
     catch (e) {
         return []
     }
+}
 
-    
+// remove note
+
+const removeNote = function (title) {
+    const notes = loadNotes()
+    const updatedNotes = notes.filter(function (note) {
+        return title !== note.title
+    })
+    if (updatedNotes.length < notes.length) {
+        console.log(chalk.green('Note removed!'))
+        saveNotes(updatedNotes)
+    }
+    else {
+        console.log(chalk.red('No note found!'))
+    }
 }
 
 module.exports = {
     getNotes: getNotes,
-    addNote: addNote
+    addNote: addNote,
+    removeNote: removeNote
 }
