@@ -1,3 +1,3 @@
 # Node.js
-do '''npm install'''
-run code passing with command line variables to learn to add/remove/list notes
+### run `npm install`
+#### run code passing in command line variables to be given instructions on adding/removing/listing notes
